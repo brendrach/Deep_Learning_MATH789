@@ -1,0 +1,200 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+ 
+\title{Math 789 Assignment 2}
+\author{Brendan Drachler}
+\date{\today}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+\section*{Bishop 1.1}
+Starting from, 
+\begin{equation}
+\prod_{i=1}^{d} \int_{-\infty}^{\infty} e^{x_{i}^{2}} dx_i = S_d \int_{0}^{\infty} e^{-r^2} r^{d-1} dr
+\end{equation}
+Our goal is to solve for $S_d$ and make sure it agrees with the analytical expression in Eq. 1.43. When d=2, the expression becomes (thanks Wolfram!):
+\begin{equation}
+\prod_{i=1}^{2} \int_{-\infty}^{\infty} e^{x_{i}^{2}} dx_i = S_2 \int_{0}^{\infty} e^{-r^2} r dr =  \frac{1}{2} S_2 
+\end{equation}
+\begin{equation}
+\downarrow
+\end{equation}
+\begin{equation}
+( \int_{-\infty}^{\infty} e^{x_{1}^{2}} dx_1) ( \int_{-\infty}^{\infty} e^{x_{2}^{2}} dx_2 ) = \frac{1}{2} S_2 
+\end{equation}
+Each of the integrals on the left hand side evaluates to $\sqrt{\pi}$ (thanks Wolfram!). Therefore, we are left with:
+\begin{equation}
+2 \pi = S_2
+\end{equation}
+Now, this should be reproducible by plugging $d=2$ into Eq. 1.43.
+\begin{equation}
+S_2 = \frac{2 \pi}{\Gamma(\frac{2}{2})} = 2 \pi
+\end{equation}
+Validated! Moving onto d=3, 
+\begin{equation}
+( \int_{-\infty}^{\infty} e^{x_{1}^{2}} dx_1) ( \int_{-\infty}^{\infty} e^{x_{2}^{2}} dx_2 )( \int_{-\infty}^{\infty} e^{x_{3}^{2}} dx_3 ) =  S_3 \int_{0}^{\infty} e^{-r^2} r^2 dr = \frac{\sqrt{\pi}}{4} S_3 
+\end{equation}
+\begin{equation}
+\downarrow
+\end{equation}
+\begin{equation}
+\pi^{\frac{3}{2}}= \frac{\pi^{\frac{1}{2}}}{4} S_3 \rightarrow S_3 = 4 \pi
+\end{equation}
+Once again, this should be reproducible by plugging d=3 into Eq. 1.43. 
+\begin{equation}
+S_3 = \frac{2 \pi^{\frac{3}{2}}}{\Gamma(\frac{3}{2})} = \frac{2 \pi^{\frac{3}{2}}}{\frac{\pi^{\frac{1}{2}}}{2}} = 4 \pi
+\end{equation}
+
+
+\section*{Bishop 1.3}
+First, I will define three quantities:
+\begin{equation}
+V_d = \frac{S_d a^d}{d}
+\end{equation}
+\begin{equation}
+V_d \vert_{r = a - \epsilon} =  \frac{S_d (a - \epsilon)^d}{d}
+\end{equation}
+\begin{equation}
+V_d \vert_{r = \frac{a}{2}} =  \frac{S_d (\frac{a}{2})^d}{d}
+\end{equation}
+Now, our goal is to find the ratio of the volume of the sphere at $r=a$ to the volume at $r=a-\epsilon$.
+\begin{equation}
+\frac{V_d \vert_{r = a - \epsilon}}{V_d} = 1 - (1 - \frac{\epsilon}{a})^d = f
+\end{equation}
+We can evaluate $f$, with $\frac{\epsilon}{a} = 0.01$, for $d=2, d=10, d=1000$:
+\begin{equation}
+f_{d=2} \approx 0.0199, f_{d=10} \approx 0.0956, f_{d=1000} \approx 0.99996
+\end{equation}
+Now, we can calculate:
+\begin{equation}
+\frac{V_d \vert_{r = \frac{a}{2}}}{V_d } = 2^{-d} = f
+\end{equation}
+We can evaluate $f$ for $d=2, d=10, d=1000$:
+\begin{equation}
+f_{d=2} \approx 0.25, f_{d=10} \approx 0.000977, f_{d=1000} \approx 0
+\end{equation}
+
+
+\section*{Bishop 1.4}
+Starting from:
+\begin{equation}
+p(x) = \frac{1}{(2 \pi \sigma^2)^{\frac{1}{2}}} e^{(-\frac{||x||^2}{2 \sigma^2})}
+\end{equation}
+By using Eq. 1.42, we can transform this to polar coordinates and yield:
+\begin{equation}
+p(r) =  \frac{S_d r^{d-1}}{(2 \pi \sigma^2)^{\frac{1}{2}}} e^{(-\frac{r^2}{2 \sigma^2})}
+\end{equation}
+Set the derivative equal to $0$ and solve for r to find the maximum:
+\begin{equation}
+0 = \frac{S_d}{2 \pi \sigma^2} [ (d-1) r^{d-2} e^{-\frac{r^2}{2 \sigma^2}} - \frac{r^d}{\sigma^2} e^{-\frac{r^2}{2 \sigma^2}}]
+\end{equation}
+\begin{equation}
+\downarrow
+\end{equation}
+\begin{equation}
+0 = (d-1)r^{d-2} - \frac{r^d}{\sigma^2}
+\end{equation}
+\begin{equation}
+\downarrow
+\end{equation}
+\begin{equation}
+r = \sqrt{(d-1)\sigma^2}
+\end{equation}
+If $d >> 1$, this simplifies to $\approx \sqrt{d \sigma^2}$. We can now calculate the ratio of $p(r + \epsilon)$ to $p(r)$ as requested. 
+\begin{equation}
+\frac{p(r + \epsilon)}{p(r)} = \frac{(r+\epsilon)^{d-1} e^{-\frac{(r + \epsilon)^2}{2 \sigma^2}}}{(r)^{d-1} e^{-\frac{(r)^2}{2 \sigma^2}}}
+\end{equation}
+\begin{equation}
+\downarrow
+\end{equation}
+\begin{equation}
+(1 + \frac{\epsilon}{r})^{d-1} e^{-\frac{2 \epsilon r + \epsilon^2}{2 \sigma^2}}
+\end{equation}
+\begin{equation}
+\downarrow
+\end{equation}
+\begin{equation}
+e^{(-\frac{2 \epsilon r + \epsilon^2}{2 \sigma^2} + (d-1) \ln (1+\frac{\epsilon}{r}) )}
+\end{equation}
+Taylor expanding this around $r = 0$ results in (thanks Wolfram!):
+\begin{equation}
+p(r + \epsilon) = r^{d-1} e^{-\frac{-r^2}{2 \sigma^2}} e^{-\frac{3 \epsilon^2}{2 \sigma^2}} = p(r) e^{-\frac{3 \epsilon^2}{2 \sigma^2}} 
+\end{equation}
+
+\section{Bishop 1.5}
+We will start by differentiating Bishop Eq. 1.3:
+\begin{equation}
+E = \frac{1}{2} \sum_{n=1}^{N} [ y(x_n ; w) - t_n]^2
+\end{equation}
+where $y(x_n ; w)$ is given by:
+\begin{equation}
+\sum_{m=1}^{M} = w_m x^m
+\end{equation}
+We want to minimize the weighs, $w$:
+\begin{equation}
+\frac{\partial E}{\partial w} = 0 = \sum_{n=1}^{N} [( \sum_{m=0}^{M} w_m x_n^m) x_n^i - x_n^i t_n]
+\end{equation}
+\begin{equation}
+\downarrow
+\end{equation}
+\begin{equation}
+\sum_{n=1}^{N} \sum_{m=0}^{M} x_n^{m+i} w_m = \sum_{n=1}^{N} x_n^i t_n
+\end{equation}
+Writing $A_{j j'} = \sum_{n} (x^n)^{j + j'}$ and $T_{j'} = \sum_{n} t^n (x^n)^{j'}$ as defined in Bishop Eq. 1.53 it is easy to see that the last equation simplifies to Bishop Eq. 1.52:
+\begin{equation}
+ \sum_{m=1}^{M} A_{j j'} w_j = T_{j'}
+\end{equation}
+
+\section*{Bishop 1.9 }
+Using Bayes Theorem, 
+\begin{equation}
+P(A|B) = \frac{P(B|A) P(A)}{P(B)}
+\end{equation}
+\begin{equation}
+\downarrow
+\end{equation}
+\begin{equation}
+P(Box_1 | Apple) = \frac{P(Apple | Box_1) P(Box_1)} {P(Apple)}
+\end{equation}
+\begin{equation}
+P(Box_1 | Apple) = \frac{\frac{8}{12} \frac{1}{2}} {\frac{1}{2} \frac{8}{12} + \frac{10}{12} \frac{1}{2}} = 0.4\bar{4}
+\end{equation}
+
+\section{Bishop 1.10}
+The first bit is trivial (maybe too trivial...)
+\begin{equation}
+a \leq b 
+\end{equation}
+Multiply both sides by a and take a square root...
+\begin{equation}
+a \leq (a b)^{(\frac{1}{2})}
+\end{equation}
+The second part isn't as simple:
+\begin{equation}
+p(error) = \int_{r_1} p(x, C_2) dx + \int_{r_2} p(x, C_1) dx
+\end{equation}
+\begin{equation}
+\downarrow
+\end{equation}
+Using our previous result, we can say:
+\begin{equation}
+\int_{r_1} p(x, C_2) dx \leq \int_{r_1} [ p(x, C_1) p(x, C_2)]^{\frac{1}{2}} dx
+\end{equation}
+\begin{equation}
+\int_{r_2} p(x, C_1) dx \leq \int_{r_2} [ p(x, C_2) p(x, C_1)]^{\frac{1}{2}} dx
+\end{equation}
+Combining these results in the same fashion as our trivial example leads to:
+\begin{equation}
+P(error) \leq [p(x|C_1) P(C_1) p(x|C_2) P(C_2)]^{\frac{1}{2}}
+\end{equation}
+
+\section*{Bishop 1.11}
+I'm not sure I fully understand the question. However, if 
+\begin{equation}
+L_{k j} = 1 - \delta_{k j}, 
+\end{equation}
+there will be no loss. So by definition it will minimize the probability of misclassification.
+\end{document}
